@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -20,7 +21,7 @@ public class MainController {
 
   private int increaseNo = -1;
 
-  @RequestMapping(value = "/sbb")
+  @RequestMapping (value = "/sbb")
   // 아래 함수의 리턴값을 그대로 브라우저에 표시
   // 아래 함수의 리턴가밧을 문자열화해서 브라우저 응답을 body에 담는다.
   @ResponseBody
@@ -32,9 +33,10 @@ public class MainController {
   /**
    * 11강 2023-12-20
    * return 값이 html로 넘어가지 않음?? -> 이렇게는 사용하지 않으니까 그리 신경쓰지 말자!!!
+   *
    * @return
    */
-  @GetMapping(value = "/test")
+  @GetMapping (value = "/test")
   public String showMain() {
 
     return """
@@ -44,7 +46,7 @@ public class MainController {
         ;
   }
 
-  @GetMapping(value = "/plus")
+  @GetMapping (value = "/plus")
   @ResponseBody
   public int showPlus(int a, int b) {
 
@@ -68,7 +70,7 @@ public class MainController {
     return a - b;
   }
 
-  @GetMapping(value = "/increase")
+  @GetMapping (value = "/increase")
   @ResponseBody
   public int showIncrease() {
 
@@ -76,7 +78,7 @@ public class MainController {
     return increaseNo;
   }
 
-  @GetMapping(value = "/gugudan")
+  @GetMapping (value = "/gugudan")
   @ResponseBody
   public String showGugudan(Integer dan, Integer limit) {
 
@@ -92,8 +94,22 @@ public class MainController {
     final Integer finalDan = dan;
     return IntStream.rangeClosed( 1, limit )
         .mapToObj( i -> "%d * %d = %d".formatted( finalDan, i, finalDan * i ) )
-        .collect( Collectors.joining("<br>"));
+        .collect( Collectors.joining( "<br>" ) );
   }
 
-  //
+  // mbti 구현
+  @GetMapping (value = "/mbti/{name}")
+  @ResponseBody
+  public String showMbti(@PathVariable String name) {
+
+    // switch 문을 간단히...
+    return switch (name) {
+
+      case "홍길동" -> "INFP";
+      case "홍길순" -> "ENFP";
+      case "임꺽정" -> "ESFJ";
+      case "박상원" -> "INFJ";
+      default -> "모름";
+    };
+  }
 }
