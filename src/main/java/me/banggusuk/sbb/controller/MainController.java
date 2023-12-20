@@ -2,6 +2,7 @@ package me.banggusuk.sbb.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -113,5 +114,31 @@ public class MainController {
       case "홍길동" , "박상원" -> "INFP";
       default -> "모름";
     };
+  }
+
+  @GetMapping (value = "/save-session/{name}/{value}")
+  @ResponseBody
+  public String saveSession(@PathVariable String name, @PathVariable String value, HttpServletRequest request) {
+
+    HttpSession session = request.getSession();
+    session.setAttribute( name, value );
+
+    return "세션변수 %s의 값이 %s(으)로 설정되었습니다.".formatted( name, value );
+  }
+
+  @GetMapping (value = "/get-session/{name}")
+  @ResponseBody
+  public String getSession(
+      @PathVariable String name,
+      HttpSession session
+      /*HttpServletRequest request*/) {
+
+    // request 안에 cookies 가 포함되어 있다. -> 이것이 HttpServletRequest 를 사용하는 이유
+    // request => cookies => JSESSIONID => 세션을 가져올 수 있음.
+
+    // HttpSession을 바로 사용해도 된다.
+    String value = (String) session.getAttribute( name );
+
+    return "세션변수 %s의 값은 %s입니다.".formatted( name, value );
   }
 }
