@@ -105,10 +105,12 @@ public class MainController {
     // switch 문을 간단히...
     return switch (name) {
 
-      case "홍길동" -> "INFP";
-      case "홍길순" -> "ENFP";
+      case "홍길순" -> {
+        char j = 'J';
+        yield "INF" + j;
+      }
       case "임꺽정" -> "ESFJ";
-      case "박상원" -> "INFJ";
+      case "홍길동" , "박상원" -> "INFP";
       default -> "모름";
     };
   }
