@@ -5,6 +5,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 /**
  * author : ms.Lee
  * date   : 2023-12-20
@@ -33,8 +36,9 @@ public class MainController {
 
     return """
         <h1>안녕하세요</h1>
-        <input type="text" placeholder="입력해주세요." />
-        """;
+                <input type="text" placeholder="입력해주세요." />
+        """
+        ;
   }
 
   @GetMapping(value = "/plus")
@@ -57,5 +61,24 @@ public class MainController {
 
     increaseNo++;
     return increaseNo;
+  }
+
+  @GetMapping(value = "/gugudan")
+  @ResponseBody
+  public String showGugudan(Integer dan, Integer limit) {
+
+    if (dan == null) {
+
+      dan = 9;
+    }
+    if (limit == null) {
+
+      limit = 9;
+    }
+
+    final Integer finalDan = dan;
+    return IntStream.rangeClosed( 1, limit )
+        .mapToObj( i -> "%d * %d = %d".formatted( finalDan, i, finalDan * i ) )
+        .collect( Collectors.joining("<br>"));
   }
 }
