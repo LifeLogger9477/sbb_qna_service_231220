@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class MainController {
 
+  private int increaseNo = -1;
+
   @RequestMapping(value = "/sbb")
   // 아래 함수의 리턴값을 그대로 브라우저에 표시
   // 아래 함수의 리턴가밧을 문자열화해서 브라우저 응답을 body에 담는다.
@@ -33,5 +35,27 @@ public class MainController {
         <h1>안녕하세요</h1>
         <input type="text" placeholder="입력해주세요." />
         """;
+  }
+
+  @GetMapping(value = "/plus")
+  @ResponseBody
+  public int showPlus(int a, int b) {
+
+    return a + b;
+  }
+
+  @GetMapping(value = "/minus")
+  @ResponseBody
+  public int showMinus(int a, int b) {
+
+    return a - b;
+  }
+
+  @GetMapping(value = "/increase")
+  @ResponseBody
+  public int showIncrease() {
+
+    increaseNo++;
+    return increaseNo;
   }
 }
