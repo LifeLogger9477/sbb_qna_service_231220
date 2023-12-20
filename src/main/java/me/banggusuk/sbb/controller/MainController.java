@@ -1,10 +1,13 @@
 package me.banggusuk.sbb.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.IOException;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -48,7 +51,17 @@ public class MainController {
     return a + b;
   }
 
-  @GetMapping(value = "/minus")
+  @GetMapping (value = "/plus2")
+  @ResponseBody
+  public void showPlus2(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+    int a = Integer.parseInt( request.getParameter( "a" ) );
+    int b = Integer.parseInt( request.getParameter( "b" ) );
+
+    response.getWriter().append( a + b + "" );
+  }
+
+  @GetMapping (value = "/minus")
   @ResponseBody
   public int showMinus(int a, int b) {
 
@@ -81,4 +94,6 @@ public class MainController {
         .mapToObj( i -> "%d * %d = %d".formatted( finalDan, i, finalDan * i ) )
         .collect( Collectors.joining("<br>"));
   }
+
+  //
 }
