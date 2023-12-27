@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -144,6 +146,8 @@ public class MainController {
     return "세션변수 %s의 값은 %s입니다.".formatted( name, value );
   }
 
+  private List<Article> articles = new ArrayList<>();
+
   @GetMapping (value = "/addArticle")
   @ResponseBody
   public String addArticle(String title, String body) {
@@ -157,17 +161,30 @@ public class MainController {
      */
     //Article article = new Article( id, title, body );
     Article article = new Article( title, body );
+    articles.add( article );
 
     return "%d번 게시물이 생성되었습니다.".formatted( article.getId() );
   }
 
+  @GetMapping(value = "/article/{id}")
+  @ResponseBody
+  public Article getArticle(@PathVariable int id) {
+
+    Article article = articles.stream()
+        .filter( a -> a.getId() == id )
+        .findFirst()
+        .get();
+
+    return article;
+  }
+
+  @Getter
   @AllArgsConstructor
   class Article{
 
     // Article 번호 증가
     private static int lastId = 0;
 
-    @Getter
     private int id;
     private String title;
     private String body;
