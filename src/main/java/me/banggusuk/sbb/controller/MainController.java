@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -265,13 +266,13 @@ public class MainController {
 
   // id는 pathVariable롤 받고
   // 다른 값은 queryStream으로 받는다. --> 가능
-  @GetMapping (value = "/addPerson/{id}")
+  @GetMapping (value = "/addPersonId/{id}")
   @ResponseBody
   public Person addPersonId(Person p) {
 
     // 이렇게 사용하면 new로 객체가 생성된다.
-    // 1: http://localhost:8080/addPerson/7?id=3&age=10&name=aaa
-    // 2: http://localhost:8080/addPerson/7?age=10&name=aaa
+    // 1: http://localhost:8080/addPersonId/7?id=3&age=10&name=aaa
+    // 2: http://localhost:8080/addPersonId/7?age=10&name=aaa
     // 위 2개의 경우에 대해서도 아래와 같이 동작한다.
     // 1: new Person(3, 10, "aaa");
     // 2: new Person(7, 10, "aaa");
@@ -280,6 +281,8 @@ public class MainController {
   }
 
   @Getter
+  @Setter
+  @NoArgsConstructor
   @AllArgsConstructor
   class Person {
 
