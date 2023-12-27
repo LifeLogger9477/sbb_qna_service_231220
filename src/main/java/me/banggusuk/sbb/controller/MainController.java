@@ -3,6 +3,7 @@ package me.banggusuk.sbb.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -140,5 +141,29 @@ public class MainController {
     String value = (String) session.getAttribute( name );
 
     return "세션변수 %s의 값은 %s입니다.".formatted( name, value );
+  }
+
+  @GetMapping (value = "/addArticle")
+  @ResponseBody
+  public String addArticle(String title, String body) {
+
+    int id = 1;
+    /*
+    Article article = new Article();
+    article.id = id;
+    article.title = title;
+    article.body = body;
+     */
+    Article article = new Article( id, title, body );
+
+    return "%d번 게시물이 생성되었습니다.".formatted( id );
+  }
+
+  @AllArgsConstructor
+  class Article{
+
+    private int id;
+    private String title;
+    private String body;
   }
 }
