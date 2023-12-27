@@ -182,7 +182,7 @@ public class MainController {
     Article article = articles.stream()
         .filter( a -> a.getId() == id )
         .findFirst()
-        .get();
+        .orElse( null );
 
     return article;
   }
@@ -198,7 +198,7 @@ public class MainController {
     Article article = articles.stream()
         .filter( a -> a.getId() == id )
         .findFirst()
-        .get();
+        .orElse( null );
 
     if (article == null) {
 
