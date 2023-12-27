@@ -263,6 +263,15 @@ public class MainController {
     return p;
   }
 
+  // id는 pathVariable롤 받고
+  // 다른 값은 queryStream으로 받는다. --> 가능
+  @GetMapping (value = "/addPerson/{id}")
+  @ResponseBody
+  public Person addPersonId(Person p) {
+
+    return p;
+  }
+
   @Getter
   @AllArgsConstructor
   class Person {
