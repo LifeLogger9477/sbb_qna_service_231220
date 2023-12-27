@@ -233,7 +233,7 @@ public class MainController {
   @Getter
   @Setter
   @AllArgsConstructor
-  class Article{
+  class Article {
 
     // Article 번호 증가
     private static int lastId = 0;
@@ -246,5 +246,29 @@ public class MainController {
 
       this( ++lastId, title, body );
     }
+  }
+
+  @GetMapping (value = "/addPersonOldWay")
+  @ResponseBody
+  public Person addPersonOldWay(int id, int age, String name) {
+
+    Person p = new Person( id, age, name );
+    return p;
+  }
+
+  @GetMapping (value = "/addPerson")
+  @ResponseBody
+  public Person addPerson(Person p) {
+
+    return p;
+  }
+
+  @Getter
+  @AllArgsConstructor
+  class Person {
+
+    private int id;
+    private int age;
+    private String name;
   }
 }
