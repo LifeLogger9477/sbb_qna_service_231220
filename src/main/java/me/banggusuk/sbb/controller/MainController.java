@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -147,23 +148,33 @@ public class MainController {
   @ResponseBody
   public String addArticle(String title, String body) {
 
-    int id = 1;
+    // int id = 1;
     /*
     Article article = new Article();
     article.id = id;
     article.title = title;
     article.body = body;
      */
-    Article article = new Article( id, title, body );
+    //Article article = new Article( id, title, body );
+    Article article = new Article( title, body );
 
-    return "%d번 게시물이 생성되었습니다.".formatted( id );
+    return "%d번 게시물이 생성되었습니다.".formatted( article.getId() );
   }
 
   @AllArgsConstructor
   class Article{
 
+    // Article 번호 증가
+    private static int lastId = 0;
+
+    @Getter
     private int id;
     private String title;
     private String body;
+
+    public Article(String title, String body) {
+
+      this( ++lastId, title, body );
+    }
   }
 }
